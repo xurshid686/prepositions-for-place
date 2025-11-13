@@ -1,0 +1,8 @@
+{
+  "name": "prepositions-test",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'No build process needed for static site'"
+  },
+  "dependencies": {}
+}
