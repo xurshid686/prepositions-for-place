@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepositions Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #7f8c8d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-start {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            background-color: #f9fbfd;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .uzbek-sentence {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: white;
+        }
+        
+        .option:hover {
+            background-color: #f8f9fa;
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .option.selected {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            background-color: #2ecc71;
+        }
+        
+        .btn-submit:hover {
+            background-color: #27ae60;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .result h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        .report {
+            text-align: left;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9fbfd;
+            border-radius: 8px;
+        }
+        
+        .report-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .report-correct {
+            background-color: #d5f4e6;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .report-incorrect {
+            background-color: #fdeaea;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .uzbek-report {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            color: #3498db;
+        }
+        
+        .telegram-notice {
+            background-color: #d5f4e6;
+            border: 1px solid #27ae60;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .uzbek-sentence {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prepositions of Place Test</h1>
+        
+        <div id="intro-section">
+            <p class="intro">Translate Uzbek sentences to English. Choose the correct translation with the right preposition.</p>
+            
+            <div class="telegram-notice">
+                <strong>📱 Results will be sent to Telegram automatically</strong>
+            </div>
+            
+            <div class="form-group">
+                <label for="student-name">Enter your name:</label>
+                <input type="text" id="student-name" placeholder="Your name">
+            </div>
+            
+            <button id="start-btn" class="btn btn-start">Start Test</button>
+        </div>
+        
+        <div id="test-section" class="hidden">
+            <div class="timer">
+                Time: <span id="time">00:00</span>
+            </div>
+            
+            <div id="questions-container">
+                <!-- Questions will be inserted here by JavaScript -->
+            </div>
+            
+            <button id="submit-btn" class="btn btn-submit">Submit Test</button>
+        </div>
+        
+        <div id="result-section" class="hidden">
+            <div class="result">
+                <h2>Test Results</h2>
+                <p id="student-result">Student: <span id="result-name"></span></p>
+                <p id="time-result">Time spent: <span id="result-time"></span></p>
+                <div class="score">
+                    Score: <span id="score"></span>/15
+                </div>
+                <p id="correct-count" class="correct"></p>
+                <p id="incorrect-count" class="incorrect"></p>
+                
+                <div id="loading-message" class="loading hidden">
+                    Sending results to Telegram...
+                </div>
+                
+                <div id="telegram-success" class="loading hidden" style="color: #27ae60;">
+                    ✅ Results sent to Telegram successfully!
+                </div>
+                
+                <div id="telegram-error" class="loading hidden" style="color: #e74c3c;">
+                    ❌ Failed to send to Telegram.
+                </div>
+                
+                <div id="report" class="report">
+                    <h3>Test Report</h3>
+                    <!-- Report will be inserted here by JavaScript -->
+                </div>
+                
+                <button id="restart-btn" class="btn" style="margin-top: 20px;">Take Test Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions for the test - Uzbek to English translation
+        const questions = [
+            {
+                uzbek: "Kompyuter stol ustida.",
+                options: [
+                    "The computer is on the table.",
+                    "The computer is under the table.",
+                    "The computer is in the table.",
+                    "The computer is above the table."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Kitoblar javonda.",
+                options: [
+                    "The books are in the shelf.",
+                    "The books are on the shelf.",
+                    "The books are under the shelf.",
+                    "The books are behind the shelf."
+                ],
+                correct: 1
+            },
+            {
+                uzbek: "Koptok stol ostida.",
+                options: [
+                    "The ball is under the table.",
+                    "The ball is on the table.",
+                    "The ball is between the table.",
+                    "The ball is next to the table."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Rasm devorda.",
+                options: [
+                    "The picture is on the wall.",
+                    "The picture is under the wall.",
+                    "The picture is above the wall.",
+                    "The picture is behind the wall."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Poyabzal karavot ostida.",
+                options: [
+                    "The shoes are under the bed.",
+                    "The shoes are above the bed.",
+                    "The shoes are between the bed.",
+                    "The shoes are opposite the bed."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Samolyut bulutlar ustida.",
+                options: [
+                    "The airplane is above the clouds.",
+                    "The airplane is under the clouds.",
+                    "The airplane is between the clouds.",
+                    "The airplane is behind the clouds."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Stul stol yonida.",
+                options: [
+                    "The chair is next to the table.",
+                    "The chair is under the table.",
+                    "The chair is on the table.",
+                    "The chair is above the table."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Mashina uy oldida.",
+                options: [
+                    "The car is in front of the house.",
+                    "The car is under the house.",
+                    "The car is above the house.",
+                    "The car is in the house."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Maktab bog' yonida.",
+                options: [
+                    "The school is next to the garden.",
+                    "The school is under the garden.",
+                    "The school is above the garden.",
+                    "The school is in the garden."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Do'kon bank qarshisida.",
+                options: [
+                    "The shop is opposite the bank.",
+                    "The shop is under the bank.",
+                    "The shop is above the bank.",
+                    "The shop is in the bank."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Bolalar xonada.",
+                options: [
+                    "The children are in the room.",
+                    "The children are on the room.",
+                    "The children are under the room.",
+                    "The children are above the room."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Qalam quti ichida.",
+                options: [
+                    "The pencil is in the box.",
+                    "The pencil is on the box.",
+                    "The pencil is under the box.",
+                    "The pencil is above the box."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Kalitlar stol ustida.",
+                options: [
+                    "The keys are on the table.",
+                    "The keys are in the table.",
+                    "The keys are under the table.",
+                    "The keys are above the table."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Quyosh bulutlar orqasida.",
+                options: [
+                    "The sun is behind the clouds.",
+                    "The sun is in front of the clouds.",
+                    "The sun is next to the clouds.",
+                    "The sun is between the clouds."
+                ],
+                correct: 0
+            },
+            {
+                uzbek: "Stol deraza va eshik o'rtasida.",
+                options: [
+                    "The table is between the window and the door.",
+                    "The table is in front of the window and the door.",
+                    "The table is next to the window and the door.",
+                    "The table is opposite the window and the door."
+                ],
+                correct: 0
+            }
+        ];
+
+        // DOM elements
+        const introSection = document.getElementById('intro-section');
+        const testSection = document.getElementById('test-section');
+        const resultSection = document.getElementById('result-section');
+        const startBtn = document.getElementById('start-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const timeDisplay = document.getElementById('time');
+        const questionsContainer = document.getElementById('questions-container');
+        const resultName = document.getElementById('result-name');
+        const resultTime = document.getElementById('result-time');
+        const scoreDisplay = document.getElementById('score');
+        const correctCount = document.getElementById('correct-count');
+        const incorrectCount = document.getElementById('incorrect-count');
+        const reportContainer = document.getElementById('report');
+        const loadingMessage = document.getElementById('loading-message');
+        const telegramSuccess = document.getElementById('telegram-success');
+        const telegramError = document.getElementById('telegram-error');
+
+        // Test state
+        let studentName = '';
+        let startTime;
+        let timerInterval;
+        let userAnswers = [];
+
+        // Start the test
+        startBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (!studentName) {
+                alert('Please enter your name before starting the test.');
+                return;
+            }
+            
+            introSection.classList.add('hidden');
+            testSection.classList.remove('hidden');
+            
+            // Initialize questions
+            renderQuestions();
+            
+            // Start timer
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        });
+
+        // Render questions
+        function renderQuestions() {
+            questionsContainer.innerHTML = '';
+            userAnswers = [];
+            
+            questions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+                
+                const questionNumber = document.createElement('div');
+                questionNumber.className = 'question-number';
+                questionNumber.textContent = `Question ${index + 1}`;
+                
+                const uzbekSentence = document.createElement('div');
+                uzbekSentence.className = 'uzbek-sentence';
+                uzbekSentence.textContent = q.uzbek;
+                
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options';
+                
+                q.options.forEach((option, optionIndex) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = option;
+                    optionElement.dataset.index = optionIndex;
+                    
+                    optionElement.addEventListener('click', () => {
+                        // Deselect all options in this question
+                        optionsContainer.querySelectorAll('.option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Select this option
+                        optionElement.classList.add('selected');
+                        userAnswers[index] = optionIndex;
+                    });
+                    
+                    optionsContainer.appendChild(optionElement);
+                });
+                
+                questionElement.appendChild(questionNumber);
+                questionElement.appendChild(uzbekSentence);
+                questionElement.appendChild(optionsContainer);
+                
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        // Update timer
+        function updateTimer() {
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Submit the test
+        submitBtn.addEventListener('click', () => {
+            // Check if all questions are answered
+            if (userAnswers.length !== questions.length || userAnswers.some(answer => answer === undefined)) {
+                if (!confirm('You have not answered all questions. Are you sure you want to submit?')) {
+                    return;
+                }
+            }
+            
+            // Stop timer
+            clearInterval(timerInterval);
+            
+            // Calculate results
+            const endTime = new Date();
+            const timeSpent = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(timeSpent / 60);
+            const seconds = timeSpent % 60;
+            const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            let correctAnswers = 0;
+            const reportItems = [];
+            
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) {
+                    correctAnswers++;
+                }
+                
+                reportItems.push({
+                    uzbek: q.uzbek,
+                    userAnswer: userAnswer !== undefined ? q.options[userAnswer] : 'Not answered',
+                    correctAnswer: q.options[q.correct],
+                    isCorrect: isCorrect
+                });
+            });
+            
+            // Display results
+            testSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+            
+            resultName.textContent = studentName;
+            resultTime.textContent = timeString;
+            scoreDisplay.textContent = `${correctAnswers}`;
+            correctCount.textContent = `Correct answers: ${correctAnswers}`;
+            incorrectCount.textContent = `Incorrect answers: ${questions.length - correctAnswers}`;
+            
+            // Generate report
+            const reportHTML = reportItems.map((item, index) => {
+                const className = item.isCorrect ? 'report-correct' : 'report-incorrect';
+                return `
+                    <div class="report-item ${className}">
+                        <div class="uzbek-report">Uzbek: ${item.uzbek}</div>
+                        <p>Your answer: "${item.userAnswer}"</p>
+                        <p>Correct answer: "${item.correctAnswer}"</p>
+                    </div>
+                `;
+            }).join('');
+            
+            reportContainer.innerHTML = `<h3>Test Report</h3>${reportHTML}`;
+            
+            // Send results to Telegram
+            sendToTelegram(studentName, correctAnswers, questions.length, timeString);
+        });
+
+        // Send results to Telegram via serverless function
+        async function sendToTelegram(studentName, score, total, timeSpent) {
+            loadingMessage.classList.remove('hidden');
+            telegramSuccess.classList.add('hidden');
+            telegramError.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/submit-result', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        studentName: studentName,
+                        score: score,
+                        total: total,
+                        timeSpent: timeSpent,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                if (response.ok) {
+                    telegramSuccess.classList.remove('hidden');
+                    console.log('Results sent to Telegram successfully');
+                } else {
+                    telegramError.classList.remove('hidden');
+                    console.error('Failed to send results to Telegram');
+                }
+            } catch (error) {
+                telegramError.classList.remove('hidden');
+                console.error('Error sending results:', error);
+            } finally {
+                loadingMessage.classList.add('hidden');
+            }
+        }
+
+        // Restart the test
+        restartBtn.addEventListener('click', () => {
+            resultSection.classList.add('hidden');
+            introSection.classList.remove('hidden');
+            studentNameInput.value = '';
+            userAnswers = [];
+            telegramSuccess.classList.add('hidden');
+            telegramError.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
