@@ -217,21 +217,6 @@
             display: none;
         }
         
-        .loading {
-            text-align: center;
-            margin: 20px 0;
-            color: #3498db;
-        }
-        
-        .telegram-notice {
-            background-color: #d5f4e6;
-            border: 1px solid #27ae60;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        
         @media (max-width: 600px) {
             .options {
                 grid-template-columns: 1fr;
@@ -249,10 +234,6 @@
         
         <div id="intro-section">
             <p class="intro">Translate Uzbek sentences to English. Choose the correct translation with the right preposition.</p>
-            
-            <div class="telegram-notice">
-                <strong>📱 Results will be sent to Telegram automatically</strong>
-            </div>
             
             <div class="form-group">
                 <label for="student-name">Enter your name:</label>
@@ -284,18 +265,6 @@
                 </div>
                 <p id="correct-count" class="correct"></p>
                 <p id="incorrect-count" class="incorrect"></p>
-                
-                <div id="loading-message" class="loading hidden">
-                    Sending results to Telegram...
-                </div>
-                
-                <div id="telegram-success" class="loading hidden" style="color: #27ae60;">
-                    ✅ Results sent to Telegram successfully!
-                </div>
-                
-                <div id="telegram-error" class="loading hidden" style="color: #e74c3c;">
-                    ❌ Failed to send to Telegram.
-                </div>
                 
                 <div id="report" class="report">
                     <h3>Test Report</h3>
@@ -478,9 +447,6 @@
         const correctCount = document.getElementById('correct-count');
         const incorrectCount = document.getElementById('incorrect-count');
         const reportContainer = document.getElementById('report');
-        const loadingMessage = document.getElementById('loading-message');
-        const telegramSuccess = document.getElementById('telegram-success');
-        const telegramError = document.getElementById('telegram-error');
 
         // Test state
         let studentName = '';
@@ -628,18 +594,14 @@
             
             reportContainer.innerHTML = `<h3>Test Report</h3>${reportHTML}`;
             
-            // Send results to Telegram
+            // Send results to Telegram silently (no UI feedback)
             sendToTelegram(studentName, correctAnswers, questions.length, timeString);
         });
 
-        // Send results to Telegram via serverless function
+        // Send results to Telegram silently
         async function sendToTelegram(studentName, score, total, timeSpent) {
-            loadingMessage.classList.remove('hidden');
-            telegramSuccess.classList.add('hidden');
-            telegramError.classList.add('hidden');
-            
             try {
-                const response = await fetch('/api/submit-result', {
+                await fetch('/api/submit-result', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -652,19 +614,10 @@
                         timestamp: new Date().toISOString()
                     })
                 });
-                
-                if (response.ok) {
-                    telegramSuccess.classList.remove('hidden');
-                    console.log('Results sent to Telegram successfully');
-                } else {
-                    telegramError.classList.remove('hidden');
-                    console.error('Failed to send results to Telegram');
-                }
+                // No UI feedback - just silently send
             } catch (error) {
-                telegramError.classList.remove('hidden');
-                console.error('Error sending results:', error);
-            } finally {
-                loadingMessage.classList.add('hidden');
+                // Silently fail - no UI feedback
+                console.error('Error sending to Telegram:', error);
             }
         }
 
@@ -674,8 +627,6 @@
             introSection.classList.remove('hidden');
             studentNameInput.value = '';
             userAnswers = [];
-            telegramSuccess.classList.add('hidden');
-            telegramError.classList.add('hidden');
         });
     </script>
 </body>
